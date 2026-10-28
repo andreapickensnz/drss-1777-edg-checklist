@@ -2269,13 +2269,13 @@ window.EDG_SURVEY = {
         function controlFor(field) {
                 if (surface !== "field") {
                         if (field.type === "select" || field.type === "boolean") {
-                                return { mode: "dropdown", why: "Accept draws this as a dropdown, including Yes / No and the enforcement list. The fieldwork article would use a brick or radios. That is not how the EDG checklist is drawn today." };
+                                return { mode: "dropdown", why: "Accept draws this as a dropdown, including Yes / No and the enforcement list." };
                         }
                         if (field.type === "lookup") {
                                 return { mode: "dropdown", why: "Accept draws a lookup as a dropdown with a clear. The names here are examples, not the live user list." };
                         }
                         if (field.type === "multiselect") {
-                                return { mode: "chipdrop", why: "Accept draws a multi-select as chips inside a dropdown, with Select All in the list. Not a search box, and not a vertical checklist." };
+                                return { mode: "chipdrop", why: "Accept draws a multi-select as chips inside a dropdown, with Select All in the list." };
                         }
                         if (field.type === "textarea") {
                                 return { mode: "text", why: "Accept draws free text as a single-line box. The spreadsheet still calls it free text." };
