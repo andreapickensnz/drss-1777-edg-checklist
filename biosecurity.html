@@ -1407,21 +1407,6 @@ body.record .hide-item {
 }
 body.record .edg-col-items .rep-row.item-hidden .field,
 body.record .edg-col-items .rep-row.item-hidden .section { display: none; }
-body.record .field { position: relative; padding-left: 26px; }
-body.record .field::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        top: 6px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: #1f9d55;
-        color: #fff;
-        font-size: 10px;
-        line-height: 16px;
-        text-align: center;
-}
 body.record select,
 body.record input[type="text"],
 body.record input[type="date"],
@@ -1605,7 +1590,7 @@ window.EDG_SURVEY = {
 		readerNotes: [
 			{
 				heading: "Anything in red is still open.",
-				text: "The section 154N and section 154M questions now sit on the alleged offence, as Accept does. The spreadsheet marks both required. DRSS-1777 asked for them not to be required, and to be hidden when no offence is alleged. Recommended Enforcement no longer offers Compliance Inspection, Compliance Office Assessment/Admin, Office Administration, or Work request Letter. Those rows are struck."
+				text: "RSHL, 28 Oct 2026: the section 154N and section 154M questions are not mandatory. This applies to both EDG surveys. Whether they hide when no offence is alleged is still open. Recommended Enforcement no longer offers Compliance Inspection, Compliance Office Assessment/Admin, Office Administration, or Work request Letter. Those rows are struck. Green ticks are not shown. This prototype is not a completed form."
 			}
 		]
 	},
@@ -1830,17 +1815,17 @@ window.EDG_SURVEY = {
                                                         label: "Were defences considered under section 154N of the Biosecurity Act 1993?",
                                                         type: "select",
                                                         options: ["Yes", "No", "N/A"],
-                                                        mandatory: true,
                                                         origin: "new",
-                                                        question: "DRSS-1777 says these two questions should not be mandatory, and should be hidden when no offence is alleged. The spreadsheet marks both mandatory. Which should the build follow?"
+                                                        decision: "Not mandatory. RSHL, 28 Oct 2026. Applies to both EDG surveys. The spreadsheet had marked these required.",
+                                                        question: "Should these questions hide when no offence is alleged? That part was not answered."
                                                 },
                                                 {
                                                         id: "defence154M",
                                                         label: "Were defences considered under section 154M of the Biosecurity Act 1993?",
                                                         type: "select",
                                                         options: ["Yes", "No", "N/A"],
-                                                        mandatory: true,
-                                                        origin: "new"
+                                                        origin: "new",
+                                                        decision: "Not mandatory. RSHL, 28 Oct 2026. Applies to both EDG surveys."
                                                 },
                                                 {
                                                         id: "defenceComment",

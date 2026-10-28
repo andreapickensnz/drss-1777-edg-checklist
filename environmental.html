@@ -1407,21 +1407,6 @@ body.record .hide-item {
 }
 body.record .edg-col-items .rep-row.item-hidden .field,
 body.record .edg-col-items .rep-row.item-hidden .section { display: none; }
-body.record .field { position: relative; padding-left: 26px; }
-body.record .field::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        top: 6px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: #1f9d55;
-        color: #fff;
-        font-size: 10px;
-        line-height: 16px;
-        text-align: center;
-}
 body.record select,
 body.record input[type="text"],
 body.record input[type="date"],
@@ -1609,7 +1594,7 @@ window.EDG_SURVEY = {
 			},
 			{
 				heading: "Anything in red is still open.",
-				text: "The section 341 and section 340 questions now sit on the alleged offence, as Accept does. The spreadsheet marks both required. DRSS-1777 asked for them not to be required, and to be hidden when no offending is alleged, for example a directive or a water shortage notice. Warning Notice is edited to Formal Warning. Struck options, including the old defence yes/no questions, are left off."
+				text: "RSHL, 28 Oct 2026: the section 341 and section 340 questions are not mandatory. This applies to both EDG surveys. Whether they hide when nothing is alleged, including a directive or a water shortage notice, is still open. Warning Notice is edited to Formal Warning. Struck options, including the old defence yes/no questions, are left off. Green ticks are not shown. This prototype is not a completed form."
 			}
 		]
 	},
@@ -1910,17 +1895,17 @@ window.EDG_SURVEY = {
                                                         label: "Were defences considered under section 341 of the Resource Management Act 1991?",
                                                         type: "select",
                                                         options: ["Yes", "No", "N/A"],
-                                                        mandatory: true,
                                                         origin: "new",
-                                                        question: "DRSS-1777 says these two questions should not be mandatory, and should be hidden when no offending is alleged, for example a directive or a water shortage notice. The spreadsheet marks both mandatory. Which should the build follow?"
+                                                        decision: "Not mandatory. RSHL, 28 Oct 2026. Applies to both EDG surveys. The spreadsheet had marked these required.",
+                                                        question: "Should these questions hide when nothing is alleged, including a directive or a water shortage notice? That part was not answered."
                                                 },
                                                 {
                                                         id: "defence340",
                                                         label: "Were defences considered under section 340 of the Resource Management Act 1991?",
                                                         type: "select",
                                                         options: ["Yes", "No", "N/A"],
-                                                        mandatory: true,
-                                                        origin: "new"
+                                                        origin: "new",
+                                                        decision: "Not mandatory. RSHL, 28 Oct 2026. Applies to both EDG surveys."
                                                 },
                                                 {
                                                         id: "defenceComment",
