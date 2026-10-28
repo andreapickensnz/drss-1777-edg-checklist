@@ -1385,9 +1385,19 @@ body.record .edg-columns {
         align-items: start;
         padding: 0 8px 12px;
 }
-body.record .edg-col:not(.edg-col-items) > .part > .part-head,
 body.record .edg-col-items > .part > .part-head,
 body.record .edg-col-items .repeater-head { display: none; }
+body.record .edg-col:not(.edg-col-items) > .part > .part-head .toggle { display: none; }
+body.record .edg-col:not(.edg-col-items) .section.depth-2,
+body.record .edg-col:not(.edg-col-items) .section.depth-3 {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: 0;
+}
+body.record .edg-col:not(.edg-col-items) .section-body {
+        padding-left: 0;
+        padding-right: 0;
+}
 body.record .edg-col-items .rep-row {
         border: 1px solid #e4e4ea;
         border-radius: 6px;
