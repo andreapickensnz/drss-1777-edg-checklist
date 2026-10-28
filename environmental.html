@@ -1500,7 +1500,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/environmental.html" aria-current="page">Desk</a>
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/biosecurity.html">Biosecurity</a>
 		</span>
-		<p class="mock-note"><strong>v2 matches the Accept EDG record.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. Red notes are still open. This is not the live app.</p>
+		<p class="mock-note"><strong>v2 matches the Accept EDG record.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. There is no fieldwork version. This is not the live app.</p>
 	</div>
 
 	<header class="ds-appbar">
@@ -1593,8 +1593,8 @@ window.EDG_SURVEY = {
 				text: "Biosecurity EDG is a separate survey. The matching desk prototype is linked from the yellow bar."
 			},
 			{
-				heading: "Anything in red is still open.",
-				text: "RSHL, 28 Oct 2026: the section 341 and section 340 questions are not mandatory. This applies to both EDG surveys. Whether they hide when nothing is alleged, including a directive or a water shortage notice, is still open. Warning Notice is edited to Formal Warning. Struck options, including the old defence yes/no questions, are left off. Green ticks are not shown. This prototype is not a completed form."
+				heading: "Decisions recorded.",
+				text: "RSHL, 28 Oct 2026: the section 341 and section 340 questions are not mandatory. They stay on the form, including when the item is a directive or a water shortage notice. The spreadsheet does not say to hide them. There is no fieldwork version of this survey. Warning Notice is edited to Formal Warning. Struck options, including the old defence yes/no questions, are left off. Green ticks are not shown. This prototype is not a completed form."
 			}
 		]
 	},
@@ -1896,8 +1896,7 @@ window.EDG_SURVEY = {
                                                         type: "select",
                                                         options: ["Yes", "No", "N/A"],
                                                         origin: "new",
-                                                        decision: "Not mandatory. RSHL, 28 Oct 2026. Applies to both EDG surveys. The spreadsheet had marked these required.",
-                                                        question: "Should these questions hide when nothing is alleged, including a directive or a water shortage notice? That part was not answered."
+                                                        decision: "Not mandatory, and not hidden. RSHL, 28 Oct 2026. The spreadsheet does not say to hide them, so they stay on the form."
                                                 },
                                                 {
                                                         id: "defence340",

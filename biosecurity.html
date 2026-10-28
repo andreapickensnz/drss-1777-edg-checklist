@@ -1500,7 +1500,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/biosecurity.html" aria-current="page">Desk</a>
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/environmental.html">Environmental</a>
 		</span>
-		<p class="mock-note"><strong>v2 matches the Accept EDG record.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. Red notes are still open. This is not the live app.</p>
+		<p class="mock-note"><strong>v2 matches the Accept EDG record.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. There is no fieldwork version. This is not the live app.</p>
 	</div>
 
 	<header class="ds-appbar">
@@ -1589,8 +1589,8 @@ window.EDG_SURVEY = {
 
 		readerNotes: [
 			{
-				heading: "Anything in red is still open.",
-				text: "RSHL, 28 Oct 2026: the section 154N and section 154M questions are not mandatory. This applies to both EDG surveys. Whether they hide when no offence is alleged is still open. Recommended Enforcement no longer offers Compliance Inspection, Compliance Office Assessment/Admin, Office Administration, or Work request Letter. Those rows are struck. Green ticks are not shown. This prototype is not a completed form."
+				heading: "Decisions recorded.",
+				text: "RSHL, 28 Oct 2026: the section 154N and section 154M questions are not mandatory. They stay on the form. The spreadsheet does not say to hide them. There is no fieldwork version of this survey. Recommended Enforcement no longer offers Compliance Inspection, Compliance Office Assessment/Admin, Office Administration, or Work request Letter. Those rows are struck. Green ticks are not shown. This prototype is not a completed form."
 			}
 		]
 	},
@@ -1816,8 +1816,7 @@ window.EDG_SURVEY = {
                                                         type: "select",
                                                         options: ["Yes", "No", "N/A"],
                                                         origin: "new",
-                                                        decision: "Not mandatory. RSHL, 28 Oct 2026. Applies to both EDG surveys. The spreadsheet had marked these required.",
-                                                        question: "Should these questions hide when no offence is alleged? That part was not answered."
+                                                        decision: "Not mandatory, and not hidden. RSHL, 28 Oct 2026. The spreadsheet does not say to hide them, so they stay on the form."
                                                 },
                                                 {
                                                         id: "defence154M",
