@@ -1343,7 +1343,7 @@ body.record .ds-toggle-val { color: #00bce2; font-size: 12px; font-weight: 700; 
 body.record .ds-toggle-label { font-size: 13px; color: #1c1c1d; }
 
 	
-/* DRSS-1777 v2: Accept EDG record. Two columns, dropdowns, chip multi-selects. */
+/* DRSS-1777 v2: existing form in Datascape. Two columns, dropdowns, chip multi-selects. */
 body.record .rec-identity input { width: 240px; }
 body.record .edg-col:not(.edg-col-items) .section-head { display: none; }
 body.record .is-inactive { display: none !important; }
@@ -1407,14 +1407,18 @@ body.record .hide-item {
 }
 body.record .edg-col-items .rep-row.item-hidden .field,
 body.record .edg-col-items .rep-row.item-hidden .section { display: none; }
+body.record .label-text { font-size: 12px; font-weight: 700; }
 body.record select,
 body.record input[type="text"],
 body.record input[type="date"],
 body.record .ds-face {
         border: 1px solid #cfc9dc;
         border-radius: 3px;
-        min-height: 30px;
+        min-height: 28px;
         background: #fff;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
 }
 body.record .ds-drop, body.record .ds-multi { position: relative; width: 100%; margin-bottom: 8px; }
 body.record .ds-face {
@@ -1425,7 +1429,7 @@ body.record .ds-face {
         padding: 3px 8px;
         text-align: left;
         cursor: pointer;
-        font: inherit;
+        font: 400 12px/16px var(--font);
         color: #1c1c1d;
 }
 body.record .ds-drop.open .ds-face,
@@ -1480,7 +1484,7 @@ body.record .ds-opt {
         border: 0;
         background: #fff;
         padding: 6px 10px;
-        font: inherit;
+        font: 400 12px/16px var(--font);
         cursor: pointer;
 }
 body.record .ds-opt.on { background: #f3e9ff; }
@@ -1500,7 +1504,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/environmental.html" aria-current="page">Desk</a>
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/biosecurity.html">Biosecurity</a>
 		</span>
-		<p class="mock-note"><strong>v2 matches the Accept EDG record.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. There is no fieldwork version. This is not the live app.</p>
+		<p class="mock-note"><strong>v2 matches the existing form in Datascape.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. There is no fieldwork version. This is not the live app.</p>
 	</div>
 
 	<header class="ds-appbar">
@@ -1538,7 +1542,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
                                 <p class="legend">
 					<span class="chip chip-new">New</span> not on the form today
 					<span class="chip chip-wording">Wording edit</span> label, type or option changes
-					<span class="chip chip-existing">Existing</span> already on the Accept survey
+					<span class="chip chip-existing">Existing</span> already on the existing form in Datascape
 					<span class="chip chip-rep">Repeater</span>
 				</p>
 				<p class="legend">
@@ -1567,7 +1571,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 	do not stop the survey being saved.
 
 	origin values map to the sheet's status column:
-		existing  - EXISTING, already on the Accept survey
+		existing  - EXISTING, already on the existing form in Datascape
 		wording   - EDIT
 		new       - NEW
 */
@@ -1687,7 +1691,7 @@ window.EDG_SURVEY = {
 							type: "textarea",
 							value: "blah blah",
 							origin: "wording",
-							detail: "Example from Accept EEDG.8284. The sheet does not set a default."
+							detail: "Example from the existing form in Datascape. The sheet does not set a default."
 						},
 						{
 							id: "actionTaken",
@@ -1696,7 +1700,7 @@ window.EDG_SURVEY = {
 							value: "they tried to reverse out of the stream, but got stuck",
 							mandatory: true,
 							origin: "wording",
-							detail: "Example from Accept EEDG.8284. The sheet does not set a default."
+							detail: "Example from the existing form in Datascape. The sheet does not set a default."
 						},
 						{
 							id: "offenceOccurring",
@@ -1748,7 +1752,7 @@ window.EDG_SURVEY = {
 					label: "Attached Evidence",
 					type: "media",
 					origin: "existing",
-					detail: "Document upload. The Accept form offers Select a file, Capture, or Existing File."
+					detail: "Document upload. The existing form in Datascape offers Select a file, Capture, or Existing File."
 				},
 				{
 					id: "evidenceOutstanding",
@@ -1832,7 +1836,7 @@ window.EDG_SURVEY = {
 							type: "date",
 							value: "2026-09-30",
 							origin: "existing",
-							detail: "Auto-populated from the alleged offences on the incident. The Accept example was 30 Sep 2026."
+							detail: "Auto-populated from the alleged offences on the incident. The existing form in Datascape was 30 Sep 2026."
 						},
 						{
 							id: "offenceTimeRange",
@@ -1859,7 +1863,7 @@ window.EDG_SURVEY = {
 							options: ["Yes - Site/Activity", "Yes - Alleged Offender", "No"],
 							mandatory: true,
 							origin: "existing",
-							detail: "The Accept example had Yes - Site/Activity selected."
+							detail: "The existing form in Datascape had Yes - Site/Activity selected."
 						},
 						{
 							id: "formalEnforcement5Years",
@@ -1869,7 +1873,7 @@ window.EDG_SURVEY = {
 							options: ["Yes - Site/Activity", "Yes - Alleged Offender", "No"],
 							mandatory: true,
 							origin: "existing",
-							detail: "The Accept example had No selected."
+							detail: "The existing form in Datascape had No selected."
 						},
 						{
 							id: "previousComments",
@@ -1885,7 +1889,7 @@ window.EDG_SURVEY = {
 							value: "No",
 							mandatory: true,
 							origin: "existing",
-							detail: "This question stays here. The copy under Incident Summary is removed. The Accept example answered No."
+							detail: "This question stays here. The copy under Incident Summary is removed. The existing form in Datascape answered No."
 						}
 					
                                                 ,
@@ -1911,7 +1915,7 @@ window.EDG_SURVEY = {
                                                         label: "Defence Comments",
                                                         type: "text",
                                                         origin: "existing",
-                                                        detail: "Sits on the alleged offence item, as on Accept. The old defence yes/no questions are struck on the spreadsheet and are not shown."
+                                                        detail: "Sits on the alleged offence item, as on the existing form in Datascape. The old defence yes/no questions are struck on the spreadsheet and are not shown."
                                                 }
 ]
 				}
@@ -1935,7 +1939,7 @@ window.EDG_SURVEY = {
 							type: "multiselect",
 							options: ["[RMA 338(1)(a)] - Danielle Hooper"],
 							origin: "existing",
-							detail: "Multi-select of the alleged offences on the incident. The Accept example selected this one."
+							detail: "Multi-select of the alleged offences on the incident. The existing form in Datascape selected this one."
 						}
 					],
 					sections: [
@@ -1950,7 +1954,7 @@ window.EDG_SURVEY = {
 									value: "Enforcement Action",
 									origin: "existing",
 									mapsTo: "Decision Line on the Incident",
-									detail: "Example from Accept EEDG.8284."
+									detail: "Example from the existing form in Datascape."
 								},
 								{
 									id: "recommendedEnforcement",
@@ -1977,7 +1981,7 @@ window.EDG_SURVEY = {
 									value: "blah",
 									mandatory: true,
 									origin: "existing",
-									detail: "Example from Accept EEDG.8284. The sheet does not set a default."
+									detail: "Example from the existing form in Datascape. The sheet does not set a default."
 								},
 								{
 									id: "recommendingOfficer",
@@ -2000,7 +2004,7 @@ window.EDG_SURVEY = {
 									value: "Approved",
 									mandatory: true,
 									origin: "existing",
-									detail: "Example from Accept EEDG.8284."
+									detail: "Example from the existing form in Datascape."
 								},
 								{
 									id: "decisionDate",
@@ -2010,7 +2014,7 @@ window.EDG_SURVEY = {
 									mandatory: true,
 									origin: "existing",
 									mapsTo: "Decision Line on the Incident",
-									detail: "Example from Accept EEDG.8284, 1 Oct 2026."
+									detail: "Example from the existing form in Datascape, 1 Oct 2026."
 								},
 								{
 									id: "reasonForDecision",
@@ -2019,7 +2023,7 @@ window.EDG_SURVEY = {
 									value: "it's a no brainer",
 									mandatory: true,
 									origin: "existing",
-									detail: "Example from Accept EEDG.8284. The sheet does not set a default."
+									detail: "Example from the existing form in Datascape. The sheet does not set a default."
 								},
 								{
 									id: "decisionMadeBy",
@@ -2037,7 +2041,7 @@ window.EDG_SURVEY = {
 									value: "Delegated Authority",
 									mandatory: true,
 									origin: "existing",
-									detail: "Example from Accept EEDG.8284. The sheet does not set a default."
+									detail: "Example from the existing form in Datascape. The sheet does not set a default."
 								}
 							],
 							sections: [
@@ -2359,16 +2363,16 @@ window.EDG_SURVEY = {
         function controlFor(field) {
                 if (surface !== "field") {
                         if (field.type === "select" || field.type === "boolean") {
-                                return { mode: "dropdown", why: "Accept draws this as a dropdown, including Yes / No and the enforcement list." };
+                                return { mode: "dropdown", why: "The existing form in Datascape draws this as a dropdown, including Yes / No and the enforcement list." };
                         }
                         if (field.type === "lookup") {
-                                return { mode: "dropdown", why: "Accept draws a lookup as a dropdown with a clear. The names here are examples, not the live user list." };
+                                return { mode: "dropdown", why: "The existing form in Datascape draws a lookup as a dropdown with a clear. The names here are examples, not the live user list." };
                         }
                         if (field.type === "multiselect") {
-                                return { mode: "chipdrop", why: "Accept draws a multi-select as chips inside a dropdown, with Select All in the list." };
+                                return { mode: "chipdrop", why: "The existing form in Datascape draws a multi-select as chips inside a dropdown, with Select All in the list." };
                         }
                         if (field.type === "textarea") {
-                                return { mode: "text", why: "Accept draws free text as a single-line box. The spreadsheet still calls it free text." };
+                                return { mode: "text", why: "The existing form in Datascape draws free text as a single-line box. The spreadsheet still calls it free text." };
                         }
                 }
                 if (field.type === "boolean") {
