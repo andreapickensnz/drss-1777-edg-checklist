@@ -1385,8 +1385,24 @@ body.record .edg-columns {
         align-items: start;
         padding: 0 8px 12px;
 }
-body.record .edg-col-items > .part > .part-head,
-body.record .edg-col-items .repeater-head { display: none; }
+body.record .edg-col-items > .part > .part-head {
+        display: flex;
+        padding: 14px 2px 6px;
+        color: #1a4f8b;
+        border-bottom: 0;
+}
+body.record .edg-col-items .repeater-head {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 2px 2px 8px;
+}
+body.record .edg-col-items .repeater-head h4 {
+        margin: 0;
+        color: #1a4f8b;
+        font-size: 13px;
+        font-weight: 700;
+}
 body.record .edg-col:not(.edg-col-items) > .part > .part-head .toggle { display: none; }
 body.record .edg-col:not(.edg-col-items) .section.depth-2,
 body.record .edg-col:not(.edg-col-items) .section.depth-3 {
@@ -1418,9 +1434,17 @@ body.record .hide-item {
 body.record .edg-col-items .rep-row.item-hidden .field,
 body.record .edg-col-items .rep-row.item-hidden .section { display: none; }
 body.record .label-text { font-size: 12px; font-weight: 700; }
+body.record input,
+body.record textarea,
+body.record select {
+        font-family: var(--font);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
+}
 body.record select,
-body.record input[type="text"],
-body.record input[type="date"],
+body.record input,
+body.record textarea,
 body.record .ds-face {
         border: 1px solid #cfc9dc;
         border-radius: 3px;
@@ -2483,9 +2507,9 @@ window.EDG_SURVEY = {
 	}
 
 	function inputControl(field, scope) {
-		const map = { text: "text", number: "number", date: "date", time: "time" };
+		const map = { text: "text", number: "number", date: "date", time: "time", textarea: "text" };
 		const input = el("input");
-		input.type = map[field.type];
+		input.type = map[field.type] || "text";
 		if (field.value) input.value = field.value;
 		else if (field.example) input.value = field.example;
 		if (field.type === "number") { input.min = "0"; input.placeholder = "Number"; }
