@@ -1387,15 +1387,31 @@ body.record .edg-columns {
 }
 body.record .edg-col-items > .part > .part-head {
         display: flex;
-        padding: 14px 2px 6px;
+        padding: 14px 0 6px;
         color: #1a4f8b;
         border-bottom: 0;
+}
+body.record .edg-col-items .part-body,
+body.record .edg-col-items .section-body,
+body.record .edg-col-items .rep-row {
+        padding-left: 0;
+        padding-right: 0;
+}
+body.record .edg-col-items .section.depth-2,
+body.record .edg-col-items .section.depth-3 {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: 0;
+}
+body.record .edg-col-items .section-head {
+        padding: 10px 0 4px;
+        color: #1a4f8b;
 }
 body.record .edg-col-items .repeater-head {
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 2px 2px 8px;
+        padding: 2px 0 8px;
 }
 body.record .edg-col-items .repeater-head h4 {
         margin: 0;
