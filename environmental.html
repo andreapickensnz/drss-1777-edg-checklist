@@ -1460,23 +1460,29 @@ body.record .is-inactive { display: none !important; }
 
 body.record .rec-tabs {
         display: flex;
-        gap: 18px;
-        padding: 0 16px;
-        border-bottom: 1px solid #e6e6ea;
+        padding: 8px 16px 12px;
+        border-bottom: 0;
 }
 body.record .rec-tabs button {
-        border: 0;
-        background: none;
-        padding: 8px 0 7px;
-        font-size: 13px;
-        color: #6b6578;
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        border: 1.5px solid #0e7c8a;
+        border-radius: 4px;
+        background: #fff;
+        padding: 6px 10px 6px 12px;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.2;
+        color: #0e7c8a;
         cursor: pointer;
 }
 body.record .rec-tabs button.on {
-        color: #2f6fed;
-        font-weight: 700;
-        box-shadow: inset 0 -2px 0 #2f6fed;
+        color: #0e7c8a;
+        font-weight: 600;
+        box-shadow: none;
 }
+body.record .rec-tabs button svg { flex: 0 0 auto; }
 body.record .edg-sheet { padding: 0 8px 8px; }
 body.record .edg-section-head {
         display: flex;
@@ -1722,7 +1728,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
                                                                 <div class="rec-status">Completed</div>
                                                         </div>
                                                 </div>
-                                                <div class="rec-tabs"><button type="button" class="on">EDG Checklist</button></div>
+                                                <div class="rec-tabs"><button type="button" class="on" aria-haspopup="listbox">EDG Checklist <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button></div>
                                         </div>
 
                                 <p class="legend">
