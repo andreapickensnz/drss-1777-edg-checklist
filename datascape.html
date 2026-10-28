@@ -1221,17 +1221,37 @@ body.record .ds-avatar {
 }
 body.record .desk-shell { display: flex; min-height: 0; }
 body.record .ds-rail {
-	width: 42px;
-	flex: 0 0 42px;
-	background: #f3f4f6;
-	border-right: 1px solid #e6e6ea;
+	width: 52px;
+	flex: 0 0 52px;
+	background: #f7f7f8;
+	border-right: 1px solid #e4e4e8;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 16px;
-	padding-top: 12px;
-	color: #8b8794;
-	font-size: 14px;
+	gap: 8px;
+	padding-top: 8px;
+	color: #3c3c44;
+}
+body.record .ds-rail button {
+	width: 36px;
+	height: 34px;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: #3c3c44;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	cursor: pointer;
+}
+body.record .ds-rail button.on { background: #efe6ff; color: #6d28d9; }
+body.record .ds-rail .rail-collapse {
+	width: 34px;
+	height: 26px;
+	border: 1px solid #d5d5da;
+	background: linear-gradient(#fff, #f3f3f5);
+	color: #7a7a84;
 }
 body.record .workspace { padding: 0 0 48px; }
 body.record .panel {
@@ -1252,7 +1272,62 @@ body.record .rec-info {
 	font-size: 11px; font-weight: 700; font-style: italic;
 	display: inline-flex; align-items: center; justify-content: center;
 }
-body.record .rec-tools { display: flex; align-items: center; gap: 10px; color: #5c5c66; font-size: 14px; }
+body.record .rec-tools { display: flex; flex-direction: column; align-items: flex-end; gap: 0; color: #1b2744; }
+body.record .rec-utilities {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 0 0 8px;
+	border-bottom: 2px solid #7b4dff;
+	color: #6d28d9;
+}
+body.record .rec-actions { display: flex; align-items: center; gap: 16px; padding: 8px 0 0; color: #1b2744; }
+body.record .rec-utilities button,
+body.record .rec-actions button {
+	border: 0;
+	background: none;
+	padding: 0;
+	color: inherit;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 1px;
+}
+body.record .rec-bell { position: relative; }
+body.record .rec-bell .badge {
+	position: absolute;
+	top: -7px;
+	right: -9px;
+	min-width: 14px;
+	height: 14px;
+	padding: 0 3px;
+	border-radius: 8px;
+	background: #f97316;
+	color: #fff;
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 14px;
+}
+body.record .rec-menu {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #f97316;
+	color: #fff;
+	justify-content: center;
+}
+body.record .rec-more { position: relative; color: #2a2a2a; padding-bottom: 8px; }
+body.record .rec-more .dot {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: 7px;
+	height: 7px;
+	margin-left: -3px;
+	border-radius: 50%;
+	background: #22c55e;
+}
+body.record .caret { font-size: 9px; line-height: 1; margin-left: 1px; }
 body.record .rec-complete {
 	background: #3a3a3a;
 	color: #fff;
@@ -1574,14 +1649,36 @@ body.record .ds-opt:hover { background: #f7f2ff; }
                 </header>
 
                 <div class="desk-shell">
-                        <nav class="ds-rail" aria-label="Application">≡</nav>
+                        <nav class="ds-rail" aria-label="Application">
+                                <button type="button" aria-label="Applications"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><g fill="#6d28d9"><rect x="1" y="1" width="4" height="4"/><rect x="7" y="1" width="4" height="4"/><rect x="13" y="1" width="4" height="4"/><rect x="1" y="7" width="4" height="4"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="7" width="4" height="4"/><rect x="1" y="13" width="4" height="4"/><rect x="7" y="13" width="4" height="4"/><rect x="13" y="13" width="4" height="4"/></g></svg></button>
+                                <button type="button" class="rail-collapse" aria-label="Collapse navigation"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 1.5 L5.5 6 L1 10.5 M8 1.5 L12.5 6 L8 10.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+                                <button type="button" class="on" aria-label="Edit"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></button>
+                                <button type="button" aria-label="Links"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.1 0l1.4-1.4a5 5 0 0 0-7.1-7.1L10 5"/><path d="M14 11a5 5 0 0 0-7.1 0L5.5 12.4a5 5 0 0 0 7.1 7.1L14 19"/></svg></button>
+                                <button type="button" aria-label="Related"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="12" cy="5.5" r="2.6"/><circle cx="6.2" cy="16.5" r="2.6"/><circle cx="17.8" cy="16.5" r="2.6"/></svg></button>
+                                <button type="button" aria-label="History"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></button>
+                                <button type="button" aria-label="Documents"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></button>
+                        </nav>
                         <main class="workspace">
                                 <div class="panel">
                                         <div class="rec-head">
                                                 <div class="rec-crumb">Survey</div>
                                                 <div class="rec-title-row">
                                                         <h1>Biosecurity EDG Checklist - 7993 <span class="rec-info">i</span></h1>
-                                                        <div class="rec-tools"><button type="button" class="rec-complete">Complete</button></div>
+                                                        <div class="rec-tools">
+                                                                <div class="rec-utilities">
+                                                                        <button type="button" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+                                                                        <button type="button" class="rec-bell" aria-label="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="badge">1</span></button>
+                                                                        <button type="button" class="rec-menu" aria-label="Menu"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+                                                                        <span class="ds-avatar" title="Andrea Pickens">AP</span>
+                                                                        <button type="button" class="rec-more" aria-label="More"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg><span class="dot"></span></button>
+                                                                </div>
+                                                                <div class="rec-actions">
+                                                                        <button type="button" aria-label="Delete"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M7 7l1 13h8l1-13"/></svg></button>
+                                                                        <button type="button" aria-label="Print"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg><span class="caret">▾</span></button>
+                                                                        <button type="button" aria-label="Save"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3"/><path d="M8 21v-6h8v6"/></svg><span class="caret">▾</span></button>
+                                                                        <button type="button" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                                                                </div>
+                                                        </div>
                                                 </div>
                                                 <div class="rec-identity">
                                                         <label>Survey Type<input value="Biosecurity EDG Checklist" readonly /></label>
