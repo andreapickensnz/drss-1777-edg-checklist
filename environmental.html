@@ -1573,6 +1573,12 @@ body.record .edg-col-items .rep-row {
 }
 body.record .edg-col-items .rep-index { display: none; }
 body.record .edg-col-items .rep-bar { margin-bottom: 4px; }
+body.record .toggle, body.record .hide-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+body.record .toggle svg, body.record .hide-item svg { flex: 0 0 16px; }
 body.record .hide-item {
         margin-left: auto;
         border: 0;
@@ -3229,10 +3235,14 @@ window.EDG_SURVEY = {
 			const bar = el("div", "rep-bar");
 			bar.appendChild(el("span", "rep-index", `${repeater.name} ${count}`));
 			if (surface !== "field") {
-				const hide = el("button", "hide-item", "hide item");
+				const hide = el("button", "hide-item");
 				hide.type = "button";
 				hide.setAttribute("data-keep-enabled", "");
-				hide.addEventListener("click", () => row.classList.toggle("item-hidden"));
+				updateHideToggle(hide, false, "item");
+				hide.addEventListener("click", () => {
+					const collapsed = row.classList.toggle("item-hidden");
+					updateHideToggle(hide, collapsed, "item");
+				});
 				bar.appendChild(hide);
 			}
 			if (removable || surface !== "field") {
@@ -3276,12 +3286,24 @@ window.EDG_SURVEY = {
 		from the design article, which only covers control choice.
 
 		Fieldwork puts a chevron to the left of the section name; CSS moves it to the front.
-		A live Datascape desk form puts "hide <section name>" at the right, with an eye-and-slash
-		icon the prototype does not draw.
+		A live Datascape desk form puts "hide <section name>" at the right, with an eye-and-slash icon.
 	*/
 	function toggleLabel(collapsed, name) {
 		if (surface === "field") return collapsed ? "⌄" : "⌃";
 		return `${collapsed ? "show" : "hide"} ${name}`;
+	}
+
+	function updateHideToggle(control, collapsed, name) {
+		const label = toggleLabel(collapsed, name);
+		control.textContent = "";
+		if (surface !== "field") {
+			control.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/><path class="eye-slash" d="m2 2 20 20"/></svg>';
+			control.querySelector(".eye-slash").style.display = collapsed ? "none" : "";
+		}
+		control.appendChild(el("span", null, label));
+		control.title = surface === "field" ? `${collapsed ? "show" : "hide"} ${name}` : label;
+		const button = control.closest("button");
+		if (button) button.setAttribute("aria-expanded", String(!collapsed));
 	}
 
 	function buildSection(section, depth, scope) {
@@ -3295,11 +3317,13 @@ window.EDG_SURVEY = {
 			head.appendChild(el("span", "section-name", section.name));
 			const sectionChip = originChip(section.origin);
 			if (sectionChip) head.appendChild(sectionChip);
-			head.appendChild(el("span", "toggle", toggleLabel(false, section.name)));
+			const toggle = el("span", "toggle");
+			head.appendChild(toggle);
+			updateHideToggle(toggle, false, section.name);
 			wrap.appendChild(head);
 			head.addEventListener("click", () => {
 				const collapsed = body.classList.toggle("collapsed");
-				head.querySelector(".toggle").textContent = toggleLabel(collapsed, section.name);
+				updateHideToggle(toggle, collapsed, section.name);
 			});
 		}
 
@@ -3427,13 +3451,15 @@ window.EDG_SURVEY = {
 		head.appendChild(el("span", "part-name", part.name));
 		const partChip = originChip(part.origin);
 		if (partChip) head.appendChild(partChip);
-		head.appendChild(el("span", "toggle", toggleLabel(false, part.name)));
+		const toggle = el("span", "toggle");
+		head.appendChild(toggle);
+		updateHideToggle(toggle, false, part.name);
 		wrap.appendChild(head);
 
 		const body = el("div", "part-body");
 		head.addEventListener("click", () => {
 			const collapsed = body.classList.toggle("collapsed");
-			head.querySelector(".toggle").textContent = toggleLabel(collapsed, part.name);
+			updateHideToggle(toggle, collapsed, part.name);
 		});
 
 		/*
@@ -3579,21 +3605,14 @@ window.EDG_SURVEY = {
 			head.appendChild(el("span", null, "Survey Detail"));
 			const toggle = el("button", "edg-hide");
 			toggle.type = "button";
-			toggle.setAttribute("aria-expanded", "true");
-			toggle.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/><path class="eye-slash" d="m2 2 20 20"/></svg>';
-			const label = el("span", null, "hide Survey Detail");
-			toggle.appendChild(label);
-			toggle.title = label.textContent;
+			updateHideToggle(toggle, false, "Survey Detail");
 			head.appendChild(toggle);
 			const cols = el("div", "edg-columns");
 			cols.id = `${mount.id}-survey-detail`;
 			toggle.setAttribute("aria-controls", cols.id);
 			toggle.addEventListener("click", () => {
 				cols.hidden = !cols.hidden;
-				toggle.setAttribute("aria-expanded", String(!cols.hidden));
-				label.textContent = `${cols.hidden ? "show" : "hide"} Survey Detail`;
-				toggle.title = label.textContent;
-				toggle.querySelector(".eye-slash").style.display = cols.hidden ? "none" : "";
+				updateHideToggle(toggle, cols.hidden, "Survey Detail");
 			});
 			leftHost = el("div", "edg-col");
 			rightHost = el("div", "edg-col edg-col-items");
