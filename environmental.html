@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>DRSS-1777 Environmental EDG Checklist · v2 · Datascape</title>
+	<title>DRSS-1777 Environmental EDG Checklist · v3 · Datascape</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
@@ -1453,7 +1453,7 @@ body.record .ds-toggle-val { color: #00bce2; font-size: 12px; font-weight: 700; 
 body.record .ds-toggle-label { font-size: 13px; color: #1c1c1d; }
 
 	
-/* DRSS-1777 v2: existing form in Datascape. Two columns, dropdowns, chip multi-selects. */
+/* DRSS-1777 v3: existing form in Datascape. Two columns, dropdowns, chip multi-selects. */
 body.record .rec-identity input { width: 240px; }
 body.record .edg-col:not(.edg-col-items) .section-head { display: none; }
 body.record .is-inactive { display: none !important; }
@@ -1681,7 +1681,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 </head>
 <body class="record desk">
 	<div class="mock-banner">
-		<strong data-doc-title>DRSS-1777 Environmental EDG Checklist · v2</strong>
+		<strong data-doc-title>DRSS-1777 Environmental EDG Checklist · v3</strong>
 		<span class="doc-surface" data-doc-surface>Datascape</span>
 		<span>Local mock of the <a href="https://datacomgroup.atlassian.net/browse/DRSS-1777">DRSS-1777</a> requirements, including the second-offence change in <a href="https://datacomgroup.atlassian.net/browse/DRSS-1742">DRSS-1742</a>. Not the live app, no database.</span>
 		<span class="links">
@@ -1689,7 +1689,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/environmental.html" aria-current="page">Desk</a>
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/biosecurity.html">Biosecurity</a>
 		</span>
-		<p class="mock-note"><strong>v2 matches the existing form in Datascape.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. There is no fieldwork version. This is not the live app.</p>
+		<p class="mock-note"><strong>v3 matches the updated DRSS-1777 workbook and existing Decision behaviour in Datascape.</strong> Survey Detail is on the left. Alleged offences and recommended actions are on the right. Single choice is a dropdown. Multi-select is chips inside a dropdown. Struck spreadsheet rows are left off. There is no fieldwork version. This is not the live app.</p>
 	</div>
 
 	<header class="ds-appbar">
@@ -1783,7 +1783,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 */
 window.EDG_SURVEY = {
 	meta: {
-		docTitle: "DRSS-1777 Environmental EDG Checklist · v2",
+		docTitle: "DRSS-1777 Environmental EDG Checklist · v3",
 		jira: "DRSS-1777",
 		jiraUrl: "https://datacomgroup.atlassian.net/browse/DRSS-1777",
 		surveyType: "Environmental EDG Checklist",
@@ -2213,6 +2213,28 @@ window.EDG_SURVEY = {
 									detail: "Example from the existing form in Datascape."
 								},
 								{
+									id: "enforcementActionIfNotApproved",
+									label: "Enforcement Action",
+									type: "select",
+									options: ["Enforcement Action", "No Action"],
+									showWhen: { field: "decision", equals: "Not Approved" },
+									conditionText: "IF Recommended Enforcement Approved/Not Approved = Not Approved",
+									origin: "existing",
+									mapsTo: "Decision Line on the Incident"
+								},
+								{
+									id: "approvedEnforcement",
+									label: "Approved Enforcement",
+									type: "select",
+									forceList: true,
+									showWhen: { all: [{ field: "decision", equals: "Not Approved" }, { field: "enforcementActionIfNotApproved", equals: "Enforcement Action" }] },
+									conditionText: "IF Recommended Enforcement Approved/Not Approved = Not Approved AND Enforcement Action = Enforcement Action",
+									detail: "Updated DRSS-1777 workbook, Environmental EDG rows 85-94: Approved Enforcement remains in Decision and is conditional on the Decision-side Enforcement Action.",
+									options: ["Abatement Notice", "Enforcement Order", "Infringement", "Letter", "Prosecution", "Formal Warning", "Water Shortage Direction"],
+									origin: "wording",
+									mapsTo: "Decision Line on the Incident"
+								},
+								{
 									id: "decisionDate",
 									label: "Decision Date",
 									type: "date",
@@ -2248,49 +2270,6 @@ window.EDG_SURVEY = {
 									mandatory: true,
 									origin: "existing",
 									detail: "Example from the existing form in Datascape. The sheet does not set a default."
-								}
-							],
-							sections: [
-								{
-									name: "If the recommendation is not approved",
-									conditionText: "IF Recommended Enforcement Approved/Not Approved = Not Approved",
-									showWhen: { field: "decision", equals: "Not Approved" },
-									fields: [
-										{
-											id: "enforcementActionIfNotApproved",
-											label: "Enforcement Action",
-											type: "select",
-											options: ["Enforcement Action", "No Action"],
-											origin: "existing",
-											mapsTo: "Decision Line on the Incident"
-										}
-									],
-									sections: [
-										{
-											name: "Approved enforcement",
-											conditionText: "IF Enforcement Action = Enforcement Action",
-											showWhen: { field: "enforcementActionIfNotApproved", equals: "Enforcement Action" },
-											fields: [
-												{
-													id: "approvedEnforcement",
-													label: "Approved Enforcement",
-													type: "select",
-													forceList: true,
-													options: [
-														"Abatement Notice",
-														"Enforcement Order",
-														"Infringement",
-														"Letter",
-														"Prosecution",
-														"Formal Warning",
-														"Water Shortage Direction"
-													],
-													origin: "wording",
-													mapsTo: "Decision Line on the Incident"
-												}
-											]
-										}
-									]
 								}
 							]
 						}
