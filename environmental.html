@@ -1683,7 +1683,7 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 	<div class="mock-banner">
 		<strong data-doc-title>DRSS-1777 Environmental EDG Checklist · v3</strong>
 		<span class="doc-surface" data-doc-surface>Datascape</span>
-		<span>Local mock of the <a href="https://datacomgroup.atlassian.net/browse/DRSS-1777">DRSS-1777</a> requirements, including the second-offence change in <a href="https://datacomgroup.atlassian.net/browse/DRSS-1742">DRSS-1742</a>. Not the live app, no database.</span>
+		<span>Local mock of the <a href="https://datacomgroup.atlassian.net/browse/DRSS-1777">DRSS-1777</a> requirements. Not the live app, no database.</span>
 		<span class="links">
 			<label class="spec-switch"><input type="checkbox" id="spec-toggle" autocomplete="off" /> Spec notes</label>
 			<a href="https://andreapickensnz.github.io/drss-1777-edg-checklist/environmental.html" aria-current="page">Desk</a>
@@ -1773,8 +1773,8 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 	DRSS-1777 Environmental EDG Checklist.
 	Transcribed from "DRSS-1777 Environmental and Biosecurity EDG.xlsx", sheet
 	"Environmental EDG". Struck-through rows are left off the form.
-	DRSS-1742 is the second alleged offence: it stays, and its mandatory fields
-	do not stop the survey being saved.
+	A second alleged offence can be left blank when no enforcement action is being taken on it,
+	and its mandatory fields do not stop the survey being saved.
 
 	origin values map to the sheet's status column:
 		existing  - EXISTING, already on the existing form in Datascape
@@ -2024,7 +2024,7 @@ window.EDG_SURVEY = {
 					origin: "existing",
 					noAdd: true,
 					stay: true,
-					decision: "DRSS-1742. Each alleged offence is copied from the incident. The officer does not add one here, and cannot take one off. A second offence can be left blank when no enforcement action is being taken on it, and the checklist can still be saved. If the offence was put on the incident by mistake, remove it there and start a new checklist. An offence that has been closed here must stay closed when the recommendation or the decision is edited.",
+					decision: "Each alleged offence is copied from the incident. The officer does not add one here, and cannot take one off. A second offence can be left blank when no enforcement action is being taken on it, and the checklist can still be saved. If the offence was put on the incident by mistake, remove it there and start a new checklist. An offence that has been closed here must stay closed when the recommendation or the decision is edited.",
 					fields: [
 						{
 							id: "plansRules",
