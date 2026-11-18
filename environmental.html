@@ -225,6 +225,11 @@ body.spec-off .part-removed { display: none; }
 	padding-left: 12px;
 	border-left: 2px dotted var(--indigo-soft);
 }
+.section.section-flush {
+	margin-left: 0;
+	padding-left: 0;
+	border-left: 0;
+}
 .section-body { padding: 8px 0 4px; }
 .collapsed { display: none; }
 
@@ -1425,7 +1430,7 @@ body.record .part-head, body.record .section-head {
 	padding: 16px 22px 6px;
 }
 body.record .section-head { font-size: 13px; padding-top: 8px; border-bottom: 0; }
-body.record .part-head .toggle, body.record .section-head .toggle { font-size: 12px; font-weight: 700; color: var(--shallow-blue); }
+body.record .part-head .toggle, body.record .section-head .toggle { font-size: 12px; font-weight: 700; color: var(--deep-blue); }
 body.record .add { color: var(--shallow-blue); border-color: var(--shallow-blue); font-weight: 700; height: 32px; background: #fff; }
 body.record .ds-toggle { display: flex; align-items: center; gap: 8px; min-height: 28px; margin-bottom: 8px; }
 body.record .ds-switch {
@@ -1455,7 +1460,6 @@ body.record .ds-toggle-label { font-size: 13px; color: #1c1c1d; }
 	
 /* DRSS-1777 v3: existing form in Datascape. Two columns, dropdowns, chip multi-selects. */
 body.record .rec-identity input { width: 240px; }
-body.record .edg-col:not(.edg-col-items) .section-head { display: none; }
 body.record .is-inactive { display: none !important; }
 
 body.record .rec-tabs {
@@ -1534,6 +1538,7 @@ body.record .edg-col-items .section.depth-3 {
         border-left: 0;
 }
 body.record .edg-col-items .section-head,
+body.record .edg-col:not(.edg-col-items) .section-head,
 body.record .edg-col-items .row-heading {
         padding: 12px 0 8px;
         margin: 8px 0 10px;
@@ -1572,24 +1577,13 @@ body.record .edg-col-items .rep-row {
         padding: 4px 16px 14px;
 }
 body.record .edg-col-items .rep-index { display: none; }
-body.record .edg-col-items .rep-bar { margin-bottom: 4px; }
-body.record .toggle, body.record .hide-item {
+body.record .edg-col-items .rep-bar { margin-bottom: 4px; justify-content: flex-end; }
+body.record .toggle {
 	display: inline-flex;
 	align-items: center;
 	gap: 5px;
 }
-body.record .toggle svg, body.record .hide-item svg { flex: 0 0 16px; }
-body.record .hide-item {
-        margin-left: auto;
-        border: 0;
-        background: none;
-        color: #2f6fed;
-        font-size: 12px;
-        font-weight: 650;
-        cursor: pointer;
-}
-body.record .edg-col-items .rep-row.item-hidden .field,
-body.record .edg-col-items .rep-row.item-hidden .section { display: none; }
+body.record .toggle svg { flex: 0 0 16px; }
 body.record .label-text { font-size: 12px; font-weight: 700; }
 body.record input,
 body.record textarea,
@@ -1753,8 +1747,8 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 
                                 <p class="legend">
 					<span class="chip chip-new">New</span> not on the form today
-					<span class="chip chip-wording">Wording edit</span> label, type or option changes
-					<span class="chip chip-existing">Existing</span> already on the existing form in Datascape
+					<span class="chip chip-wording">Existing · wording updated</span>
+					<span class="chip chip-existing">Existing · no changes</span>
 					<span class="chip chip-rep">Repeater</span>
 				</p>
 				<p class="legend">
@@ -1799,7 +1793,15 @@ window.EDG_SURVEY = {
 		officer: "R. Brennan",
 		council: "Regional Software Holdings",
 		source: "Incident survey",
-		csv: "DRSS-1777 Environmental and Biosecurity EDG.xlsx",
+		csv: "DRSS-1777 Environmental and Biosecurity EDG-3.xlsx",
+		headsUp: [
+			{
+				kind: "engineering",
+				lead: "Engineering note:",
+				text: "If a long-answer field is currently single-line text, configure it as a multiline text field so the answer wraps; rich-text formatting is not required.",
+				persist: true
+			}
+		],
 
 		routing: "This survey is opened from an incident. The master list names it Environmental EDG Checklist, on an Incident (Job), in Incidents. It is not available to start on its own, and it does not capture a location. It is not a default survey or an add-on on any activity type.",
 
@@ -1841,96 +1843,94 @@ window.EDG_SURVEY = {
 			sections: [
 				{
 					name: "The factors listed below are relevant to making a decision in respect of implementation of the enforcement document",
-					origin: "wording",
-					fields: [
+					fields: [],
+					sections: [
 						{
-							id: "adverseEffects",
-							label: "What were, or are, the actual and potential adverse effects on the environment, including the toxicity of any discharge?",
-							type: "textarea",
-							origin: "wording",
-							detail: { lead: "Popup:", text: "It is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating." }
-						},
-						{
-							id: "sensitivity",
-							label: "What is the value or sensitivity of the receiving environment or area affected, including from a cultural perspective?",
-							type: "textarea",
-							origin: "wording",
-							detail: { lead: "Popup:", text: "It is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating." }
-						},
-						{
-							id: "deliberate",
-							label: "Was the breach a result of deliberate, negligent or careless action? Was it foreseeable?",
-							type: "textarea",
-							origin: "wording",
-							detail: { lead: "Popup:", text: "It is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating." }
-						},
-						{
-							id: "remedy",
-							label: "What efforts have been made to remedy or mitigate the adverse effects, and how effective were they?",
-							type: "textarea",
-							origin: "wording",
-							detail: { lead: "Popup:", text: "It is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating." }
-						},
-						{
-							id: "profit",
-							label: "Was there any profit or benefit gained by the alleged offender(s), including avoidance of investment for infrastructure?",
-							type: "textarea",
-							origin: "wording",
-							detail: { lead: "Popup:", text: "It is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating." }
-						},
-						{
-							id: "repeat",
-							label: "Is this a repeat non-compliance or has there been previous enforcement action taken against the alleged offender(s)?",
-							type: "textarea",
-							origin: "wording",
-							detail: { lead: "Popup:", text: "It is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating." }
-						},
-						{
-							id: "specificDeterrence",
-							label: "Is there a degree of specific deterrence required in relation to the alleged offender(s)?",
-							type: "textarea",
-							origin: "wording"
-						},
-						{
-							id: "generalDeterrence",
-							label: "Is there a need for a wider general deterrence required in respect of this activity or industry?",
-							type: "textarea",
-							origin: "wording"
-						},
-						{
-							id: "rmaAlignment",
-							label: "How does the unlawful activity align with the purposes and principles of the RMA?",
-							type: "textarea",
-							value: "blah blah",
-							origin: "wording",
-							detail: "Example from the existing form in Datascape. The sheet does not set a default."
-						},
-						{
-							id: "actionTaken",
-							label: "What action was taken as a result of the incident by the alleged offender",
-							type: "textarea",
-							value: "they tried to reverse out of the stream, but got stuck",
-							mandatory: true,
-							origin: "wording",
-							detail: "Example from the existing form in Datascape. The sheet does not set a default."
-						},
-						{
-							id: "offenceOccurring",
-							label: "Is the offence still occurring",
-							type: "select",
-							options: ["Yes", "No"],
-							value: "Yes",
-							mandatory: true,
-							origin: "wording"
-						},
-						{
-							id: "foreseeable",
-							label: "Was the incident foreseeable",
-							type: "select",
-							options: ["Yes", "No"],
-							value: "Yes",
-							mandatory: true,
-							origin: "wording"
+							name: "Factors relevant to determining seriousness of breach:",
+							tooltip: "If considering prosecution, comment whether it is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating.",
+							flush: true,
+							fields: [
+								{
+									id: "adverseEffects",
+									label: "What were, or are, the actual and potential adverse effects on the environment, including the toxicity of any discharge?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "sensitivity",
+									label: "What is the value or sensitivity of the receiving environment or area affected, including from a cultural perspective?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "deliberate",
+									label: "Was the breach a result of deliberate, negligent or careless action? Was it foreseeable?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "remedy",
+									label: "What efforts have been made to remedy or mitigate the adverse effects, and how effective were they?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "profit",
+									label: "Was there any profit or benefit gained by the alleged offender(s), including avoidance of investment for infrastructure?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "repeat",
+									label: "Is this a repeat non-compliance or has there been previous enforcement action taken against the alleged offender(s)?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "failureToAct",
+									label: "Was there a failure to act on prior instructions, advice or notice?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "specificDeterrence",
+									label: "Is there a degree of specific deterrence required in relation to the alleged offender(s)?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "generalDeterrence",
+									label: "Is there a need for a wider general deterrence required in respect of this activity or industry?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "rmaAlignment",
+									label: "How does the unlawful activity align with the purposes and principles of the RMA?",
+									type: "textarea",
+									origin: "wording"
+								},
+								{
+									id: "offenceOccurring",
+									label: "Is the offence still occurring",
+									type: "select",
+									options: ["Yes", "No"],
+									mandatory: true,
+									origin: "wording"
+								},
+								{
+									id: "prosecutionAlignment",
+									label: "If being considered for prosecution, how does the intended prosecution align with the Solicitor General’s Prosecution Guidelines.",
+									type: "textarea",
+									origin: "new"
+								},
+								{
+									id: "otherFactors",
+									label: "Other relevant factors",
+									type: "textarea",
+									origin: "new"
+								}
+							]
 						}
 					]
 				}
@@ -2093,19 +2093,7 @@ window.EDG_SURVEY = {
 							type: "textarea",
 							origin: "existing"
 						},
-						{
-							id: "failureToAct",
-							label: "Was there a failure to act on prior instructions, advice or notice?",
-							type: "select",
-							options: ["Yes", "No"],
-							value: "No",
-							mandatory: true,
-							origin: "existing",
-							detail: "This question stays here. The copy under Incident Summary is removed. The existing form in Datascape answered No."
-						}
-					
-                                                ,
-                                                { type: "heading", label: "Defences", origin: "new" },
+						{ type: "heading", label: "Defences", origin: "new" },
                                                 {
                                                         id: "defence341",
                                                         label: "Were defences considered under section 341 of the Resource Management Act 1991?",
@@ -2183,17 +2171,15 @@ window.EDG_SURVEY = {
 										"Water Shortage Direction"
 									],
 									value: "Infringement",
-									origin: "wording",
+									origin: "existing",
 									mapsTo: "Decision Line on the Incident"
 								},
 								{
 									id: "reasonForRecommendation",
 									label: "Reason For Recommendation",
 									type: "textarea",
-									value: "blah",
 									mandatory: true,
 									origin: "existing",
-									detail: "Example from the existing form in Datascape. The sheet does not set a default."
 								},
 								{
 									id: "recommendingOfficer",
@@ -2237,7 +2223,7 @@ window.EDG_SURVEY = {
 									conditionText: "IF Recommended Enforcement Approved/Not Approved = Not Approved AND Enforcement Action = Enforcement Action",
 									detail: "Updated DRSS-1777 workbook, Environmental EDG rows 85-94: Approved Enforcement remains in Decision and is conditional on the Decision-side Enforcement Action.",
 									options: ["Abatement Notice", "Enforcement Order", "Infringement", "Letter", "Prosecution", "Formal Warning", "Water Shortage Direction"],
-									origin: "wording",
+									origin: "existing",
 									mapsTo: "Decision Line on the Incident"
 								},
 								{
@@ -2298,11 +2284,11 @@ window.EDG_SURVEY = {
 	const ORIGIN = {
 		standard: { label: "Standard", hint: "Same as all other surveys" },
 		pestPlant: { label: "Same as Pest Plant", hint: "Matches the Pest Plant Inspection survey" },
-		new: { label: "New", hint: "Not on the form today" },
-		wording: { label: "Wording edit", hint: "The requirements change the label, type or option wording" },
+		new: { label: "New", hint: "Added by DRSS-1777; not on the existing form in Datascape" },
+		wording: { label: "Existing · wording updated", hint: "An existing field with wording updated by the DRSS-1777 spreadsheet" },
 		moved: { label: "Moved", hint: "The field stays, its position changes" },
 		toLocation: { label: "Now on location", hint: "Moves off the survey onto the GIS location record" },
-		existing: { label: "Existing", hint: "Already configured in the environment" },
+		existing: { label: "Existing · no changes", hint: "An existing field with no requested change in the DRSS-1777 spreadsheet" },
 		removed: { label: "Removal requested", hint: "RSHL ask for this to go, but the removal is not settled" }
 	};
 
@@ -2776,9 +2762,11 @@ window.EDG_SURVEY = {
 		const area = el("textarea");
 		/*
 			"Design Datascape Fieldwork Forms" states a Text Area is always five rows high in the
-			app, so the height is not a choice the configuration makes.
+			app, so the height is not a choice the configuration makes. Desk fields use a shorter
+			multiline control while keeping long answers wrapped without rich-text editing.
 		*/
-		area.rows = 5;
+		area.rows = surface === "field" ? 5 : 3;
+		area.wrap = "soft";
 		bind(area, field, scope, () => area.value);
 		return area;
 	}
@@ -3166,7 +3154,7 @@ window.EDG_SURVEY = {
 		let node;
 		switch (field.type) {
 			case "text": case "number": case "date": case "time": node = inputControl(field, scope); break;
-			case "textarea": node = surface === "field" ? textareaControl(field, scope) : inputControl(field, scope); break;
+			case "textarea": node = textareaControl(field, scope); break;
 			case "boolean": node = surface === "field" ? choiceControl(field, scope, "brick") : dsSelectControl(field, scope); break;
 			case "select":
 				node = surface === "field" ? (control.mode === "dropdown" ? dropdownControl(field, scope) : choiceControl(field, scope, control.mode)) : dsSelectControl(field, scope);
@@ -3234,17 +3222,6 @@ window.EDG_SURVEY = {
 			const row = el("div", "rep-row");
 			const bar = el("div", "rep-bar");
 			bar.appendChild(el("span", "rep-index", `${repeater.name} ${count}`));
-			if (surface !== "field") {
-				const hide = el("button", "hide-item");
-				hide.type = "button";
-				hide.setAttribute("data-keep-enabled", "");
-				updateHideToggle(hide, false, "item");
-				hide.addEventListener("click", () => {
-					const collapsed = row.classList.toggle("item-hidden");
-					updateHideToggle(hide, collapsed, "item");
-				});
-				bar.appendChild(hide);
-			}
 			if (removable || surface !== "field") {
 				const del = el("button", "trash", "🗑");
 				del.type = "button";
@@ -3308,12 +3285,14 @@ window.EDG_SURVEY = {
 
 	function buildSection(section, depth, scope) {
 		const wrap = el("section", `section depth-${depth}`);
+		if (section.flush) wrap.classList.add("section-flush");
 		const body = el("div", "section-body");
 		if (section.headless) {
 			wrap.classList.add("section-headless");
 		} else {
 			const head = el("button", "section-head");
 			head.type = "button";
+			if (section.tooltip) head.title = section.tooltip;
 			head.appendChild(el("span", "section-name", section.name));
 			const sectionChip = originChip(section.origin);
 			if (sectionChip) head.appendChild(sectionChip);
