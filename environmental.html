@@ -193,6 +193,7 @@ body.spec-off .part-removed { display: none; }
 }
 .part-head { font-size: 15px; border-bottom: 2px solid var(--divider); }
 .section-head { font-size: 13px; border-bottom: 1px solid var(--divider); }
+.part-head-static, .section-head-static { cursor: default; }
 /*
 	The desk affordance reads "hide <section name>", as a live Datascape form does. It needs
 	room for the name, so it no longer shrinks to a two-letter word, and it must not wrap or
@@ -1842,14 +1843,11 @@ window.EDG_SURVEY = {
 			],
 			sections: [
 				{
-					name: "The factors listed below are relevant to making a decision in respect of implementation of the enforcement document",
-					fields: [],
-					sections: [
-						{
-							name: "Factors relevant to determining seriousness of breach:",
-							tooltip: "If considering prosecution, comment whether it is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating.",
-							flush: true,
-							fields: [
+					name: "Factors relevant to determining seriousness of breach:",
+					collapsible: false,
+					tooltip: "If considering prosecution, comment whether it is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating.",
+					flush: true,
+					fields: [
 								{
 									id: "adverseEffects",
 									label: "What were, or are, the actual and potential adverse effects on the environment, including the toxicity of any discharge?",
@@ -1930,8 +1928,6 @@ window.EDG_SURVEY = {
 									type: "textarea",
 									origin: "new"
 								}
-							]
-						}
 					]
 				}
 			]
@@ -2017,6 +2013,7 @@ window.EDG_SURVEY = {
 		},
 		{
 			name: "Alleged Offences",
+			collapsible: false,
 			repeaters: [
 				{
 					id: "allegedOffences",
@@ -3290,20 +3287,26 @@ window.EDG_SURVEY = {
 		if (section.headless) {
 			wrap.classList.add("section-headless");
 		} else {
-			const head = el("button", "section-head");
-			head.type = "button";
+			const collapsible = section.collapsible !== false;
+			const head = el(collapsible ? "button" : "div", `section-head${collapsible ? "" : " section-head-static"}`);
+			if (collapsible) head.type = "button";
 			if (section.tooltip) head.title = section.tooltip;
 			head.appendChild(el("span", "section-name", section.name));
 			const sectionChip = originChip(section.origin);
 			if (sectionChip) head.appendChild(sectionChip);
-			const toggle = el("span", "toggle");
-			head.appendChild(toggle);
-			updateHideToggle(toggle, false, section.name);
+			let toggle;
+			if (collapsible) {
+				toggle = el("span", "toggle");
+				head.appendChild(toggle);
+				updateHideToggle(toggle, false, section.name);
+			}
 			wrap.appendChild(head);
-			head.addEventListener("click", () => {
-				const collapsed = body.classList.toggle("collapsed");
-				updateHideToggle(toggle, collapsed, section.name);
-			});
+			if (collapsible) {
+				head.addEventListener("click", () => {
+					const collapsed = body.classList.toggle("collapsed");
+					updateHideToggle(toggle, collapsed, section.name);
+				});
+			}
 		}
 
 		/*
@@ -3425,21 +3428,27 @@ window.EDG_SURVEY = {
 			way an inactive conditional block stays visible greyed rather than disappearing.
 		*/
 		if (part.removed) wrap.classList.add("part-removed");
-		const head = el("button", "part-head");
-		head.type = "button";
+		const collapsible = part.collapsible !== false;
+		const head = el(collapsible ? "button" : "div", `part-head${collapsible ? "" : " part-head-static"}`);
+		if (collapsible) head.type = "button";
 		head.appendChild(el("span", "part-name", part.name));
 		const partChip = originChip(part.origin);
 		if (partChip) head.appendChild(partChip);
-		const toggle = el("span", "toggle");
-		head.appendChild(toggle);
-		updateHideToggle(toggle, false, part.name);
+		let toggle;
+		if (collapsible) {
+			toggle = el("span", "toggle");
+			head.appendChild(toggle);
+			updateHideToggle(toggle, false, part.name);
+		}
 		wrap.appendChild(head);
 
 		const body = el("div", "part-body");
-		head.addEventListener("click", () => {
-			const collapsed = body.classList.toggle("collapsed");
-			updateHideToggle(toggle, collapsed, part.name);
-		});
+		if (collapsible) {
+			head.addEventListener("click", () => {
+				const collapsed = body.classList.toggle("collapsed");
+				updateHideToggle(toggle, collapsed, part.name);
+			});
+		}
 
 		/*
 			The default wording treats the move as a problem, which it is in a survey that asks

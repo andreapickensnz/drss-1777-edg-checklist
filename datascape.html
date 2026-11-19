@@ -193,6 +193,7 @@ body.spec-off .part-removed { display: none; }
 }
 .part-head { font-size: 15px; border-bottom: 2px solid var(--divider); }
 .section-head { font-size: 13px; border-bottom: 1px solid var(--divider); }
+.part-head-static, .section-head-static { cursor: default; }
 /*
 	The desk affordance reads "hide <section name>", as a live Datascape form does. It needs
 	room for the name, so it no longer shrinks to a two-letter word, and it must not wrap or
@@ -1425,7 +1426,7 @@ body.record .part-head, body.record .section-head {
 	padding: 16px 22px 6px;
 }
 body.record .section-head { font-size: 13px; padding-top: 8px; border-bottom: 0; }
-body.record .part-head .toggle, body.record .section-head .toggle { font-size: 12px; font-weight: 700; color: var(--shallow-blue); }
+body.record .part-head .toggle, body.record .section-head .toggle { font-size: 12px; font-weight: 700; color: var(--deep-blue); }
 body.record .add { color: var(--shallow-blue); border-color: var(--shallow-blue); font-weight: 700; height: 32px; background: #fff; }
 body.record .ds-toggle { display: flex; align-items: center; gap: 8px; min-height: 28px; margin-bottom: 8px; }
 body.record .ds-switch {
@@ -1455,7 +1456,6 @@ body.record .ds-toggle-label { font-size: 13px; color: #1c1c1d; }
 	
 /* DRSS-1777 v3: existing form in Datascape. Two columns, dropdowns, chip multi-selects. */
 body.record .rec-identity input { width: 240px; }
-body.record .edg-col:not(.edg-col-items) .section-head { display: none; }
 body.record .is-inactive { display: none !important; }
 
 body.record .rec-tabs {
@@ -1534,6 +1534,7 @@ body.record .edg-col-items .section.depth-3 {
         border-left: 0;
 }
 body.record .edg-col-items .section-head,
+body.record .edg-col:not(.edg-col-items) .section-head,
 body.record .edg-col-items .row-heading {
         padding: 12px 0 8px;
         margin: 8px 0 10px;
@@ -1572,24 +1573,13 @@ body.record .edg-col-items .rep-row {
         padding: 4px 16px 14px;
 }
 body.record .edg-col-items .rep-index { display: none; }
-body.record .edg-col-items .rep-bar { margin-bottom: 4px; }
-body.record .toggle, body.record .hide-item {
+body.record .edg-col-items .rep-bar { margin-bottom: 4px; justify-content: flex-end; }
+body.record .toggle {
 	display: inline-flex;
 	align-items: center;
 	gap: 5px;
 }
-body.record .toggle svg, body.record .hide-item svg { flex: 0 0 16px; }
-body.record .hide-item {
-        margin-left: auto;
-        border: 0;
-        background: none;
-        color: #2f6fed;
-        font-size: 12px;
-        font-weight: 650;
-        cursor: pointer;
-}
-body.record .edg-col-items .rep-row.item-hidden .field,
-body.record .edg-col-items .rep-row.item-hidden .section { display: none; }
+body.record .toggle svg { flex: 0 0 16px; }
 body.record .label-text { font-size: 12px; font-weight: 700; }
 body.record input,
 body.record textarea,
@@ -1753,8 +1743,8 @@ body.record .ds-opt:hover { background: #f7f2ff; }
 
                                 <p class="legend">
 					<span class="chip chip-new">New</span> not on the form today
-					<span class="chip chip-wording">Wording edit</span> label, type or option changes
-					<span class="chip chip-existing">Existing</span> already on the existing form in Datascape
+					<span class="chip chip-wording">Existing · wording updated</span>
+					<span class="chip chip-existing">Existing · no changes</span>
 					<span class="chip chip-rep">Repeater</span>
 				</p>
 				<p class="legend">
@@ -1799,7 +1789,15 @@ window.EDG_SURVEY = {
 		officer: "R. Brennan",
 		council: "Regional Software Holdings",
 		source: "Incident survey",
-		csv: "DRSS-1777 Environmental and Biosecurity EDG.xlsx",
+		csv: "DRSS-1777 Environmental and Biosecurity EDG-3.xlsx",
+		headsUp: [
+			{
+				kind: "engineering",
+				lead: "Engineering note:",
+				text: "If a long-answer field is currently single-line text, configure it as a multiline text field so the answer wraps; rich-text formatting is not required.",
+				persist: true
+			}
+		],
 
 		routing: "This survey is opened from an incident. The master list names it Biosecurity EDG Checklist, on an Incident (Job), in Incidents. It is not available to start on its own, and it does not capture a location. It is not a default survey or an add-on on any activity type.",
 
@@ -1830,90 +1828,117 @@ window.EDG_SURVEY = {
 					mandatory: true,
 					origin: "wording",
 					detail: "Auto-populated from Description on the incident, and still editable."
-				},
+				}
+			],
+			sections: [
 				{
-					id: "biosecurityEffects",
-					label: "What were/are the actual or potential effects (or adverse effects from harmful organisms) on New Zealand’s biosecurity?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "environmentEffects",
-					label: "What were, or are, the potential adverse effects on the environment?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "seriousness",
-					label: "Seriousness of the offence(s) or breaches(s)?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "risks",
-					label: "What are the risks posed by the actions?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "sensitivity",
-					label: "What is the value or sensitivity of the environment or area affected?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "deliberate",
-					label: "Was the breach a result of a deliberate, negligent, or careless actions or omission?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "foreseeable",
-					label: "How foreseeable was the incident?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "remedy",
-					label: "What efforts were made to remedy or mitigate the adverse effects of the breach? (Mitigating factors) what has been the effectiveness of those efforts?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "profit",
-					label: "Was there any profit or benefit gained, or costs saved by the breach or the omissions/actions leading to it?",
-					type: "textarea",
-					origin: "wording"
-				},
-				{
-					id: "history",
-					label: "Is there a history of non-compliance and or enforcement actions? Was there a failure to act on prior instructions, warnings, advice or notice?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "specificDeterrence",
-					label: "Is there a degree of specific deterrence required in relation to the alleged offender(s)?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "widerDeterrence",
-					label: "Is there a need for wider deterrence required in respect of this location, activity or industry?",
-					type: "textarea",
-					origin: "existing"
-				},
-				{
-					id: "iwi",
-					label: "Were the circumstances of particular significance to iwi or to other groups?",
-					type: "textarea",
-					origin: "wording"
-				},
-				{
-					id: "bsaAlignment",
-					label: "How does the unlawful activity align with the purposes and principles of the Biosecurity Act?",
-					type: "textarea",
-					origin: "existing"
+					name: "Factors relevant to determining seriousness of breach:",
+					collapsible: false,
+					tooltip: "If considering prosecution, comment whether it is likely that the Court, at sentencing, will take a view that this factor is neutral/mitigating/aggravating.",
+					fields: [
+						{
+							id: "biosecurityEffects",
+							label: "What were/are the actual or potential effects (or adverse effects from harmful organisms) on New Zealand’s biosecurity?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "sensitivity",
+							label: "What is the value or sensitivity of the receiving environment or area affected, including from a cultural perspective?",
+							type: "textarea",
+							origin: "new"
+						},
+						{
+							id: "environmentEffects",
+							label: "What were, or are, the potential adverse effects on the environment?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "seriousness",
+							label: "Seriousness of the offence(s) or breaches(s)?",
+							type: "textarea",
+							origin: "wording"
+						},
+						{
+							id: "risks",
+							label: "What are the risks posed by the actions?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "deliberate",
+							label: "Was the breach a result of a deliberate, negligent, or careless actions or omission?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "foreseeable",
+							label: "How foreseeable was the incident?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "remedy",
+							label: "What efforts were made to remedy or mitigate the adverse effects of the breach? (Mitigating factors) what has been the effectiveness of those efforts?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "profit",
+							label: "Was there any profit or benefit gained, or costs saved by the breach or the omissions/actions leading to it?",
+							type: "textarea",
+							origin: "wording"
+						},
+						{
+							id: "history",
+							label: "Is there a history of non-compliance and or enforcement actions? Was there a failure to act on prior instructions, warnings, advice or notice?",
+							type: "textarea",
+							origin: "wording"
+						},
+						{
+							id: "failureToAct",
+							label: "Was there a failure to act on prior instructions, warnings, advice or notice?",
+							type: "textarea",
+							origin: "new"
+						},
+						{
+							id: "specificDeterrence",
+							label: "Is there a degree of specific deterrence required in relation to the alleged offender(s)?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "widerDeterrence",
+							label: "Is there a need for wider deterrence required in respect of this location, activity or industry?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "iwi",
+							label: "Were the circumstances of particular significance to iwi or to other groups?",
+							type: "textarea",
+							origin: "wording"
+						},
+						{
+							id: "bsaAlignment",
+							label: "How does the unlawful activity align with the purposes and principles of the Biosecurity Act?",
+							type: "textarea",
+							origin: "existing"
+						},
+						{
+							id: "otherFactors",
+							label: "Other relevant factors",
+							type: "textarea",
+							origin: "new"
+						},
+						{
+							id: "prosecutionAlignment",
+							label: "If being considered for prosecution, how does the intended prosecution align with the Solicitor General’s Prosecution Guidelines.",
+							type: "textarea",
+							origin: "new"
+						}
+					]
 				}
 			]
 		},
@@ -1975,6 +2000,7 @@ window.EDG_SURVEY = {
 		},
 		{
 			name: "Alleged Offences",
+			collapsible: false,
 			repeaters: [
 				{
 					id: "allegedOffences",
@@ -2221,11 +2247,11 @@ window.EDG_SURVEY = {
 	const ORIGIN = {
 		standard: { label: "Standard", hint: "Same as all other surveys" },
 		pestPlant: { label: "Same as Pest Plant", hint: "Matches the Pest Plant Inspection survey" },
-		new: { label: "New", hint: "Not on the form today" },
-		wording: { label: "Wording edit", hint: "The requirements change the label, type or option wording" },
+		new: { label: "New", hint: "Added by DRSS-1777; not on the existing form in Datascape" },
+		wording: { label: "Existing · wording updated", hint: "An existing field with wording updated by the DRSS-1777 spreadsheet" },
 		moved: { label: "Moved", hint: "The field stays, its position changes" },
 		toLocation: { label: "Now on location", hint: "Moves off the survey onto the GIS location record" },
-		existing: { label: "Existing", hint: "Already configured in the environment" },
+		existing: { label: "Existing · no changes", hint: "An existing field with no requested change in the DRSS-1777 spreadsheet" },
 		removed: { label: "Removal requested", hint: "RSHL ask for this to go, but the removal is not settled" }
 	};
 
@@ -2699,9 +2725,11 @@ window.EDG_SURVEY = {
 		const area = el("textarea");
 		/*
 			"Design Datascape Fieldwork Forms" states a Text Area is always five rows high in the
-			app, so the height is not a choice the configuration makes.
+			app, so the height is not a choice the configuration makes. Desk fields use a shorter
+			multiline control while keeping long answers wrapped without rich-text editing.
 		*/
-		area.rows = 5;
+		area.rows = surface === "field" ? 5 : 3;
+		area.wrap = "soft";
 		bind(area, field, scope, () => area.value);
 		return area;
 	}
@@ -3089,7 +3117,7 @@ window.EDG_SURVEY = {
 		let node;
 		switch (field.type) {
 			case "text": case "number": case "date": case "time": node = inputControl(field, scope); break;
-			case "textarea": node = surface === "field" ? textareaControl(field, scope) : inputControl(field, scope); break;
+			case "textarea": node = textareaControl(field, scope); break;
 			case "boolean": node = surface === "field" ? choiceControl(field, scope, "brick") : dsSelectControl(field, scope); break;
 			case "select":
 				node = surface === "field" ? (control.mode === "dropdown" ? dropdownControl(field, scope) : choiceControl(field, scope, control.mode)) : dsSelectControl(field, scope);
@@ -3157,17 +3185,6 @@ window.EDG_SURVEY = {
 			const row = el("div", "rep-row");
 			const bar = el("div", "rep-bar");
 			bar.appendChild(el("span", "rep-index", `${repeater.name} ${count}`));
-			if (surface !== "field") {
-				const hide = el("button", "hide-item");
-				hide.type = "button";
-				hide.setAttribute("data-keep-enabled", "");
-				updateHideToggle(hide, false, "item");
-				hide.addEventListener("click", () => {
-					const collapsed = row.classList.toggle("item-hidden");
-					updateHideToggle(hide, collapsed, "item");
-				});
-				bar.appendChild(hide);
-			}
 			if (removable || surface !== "field") {
 				const del = el("button", "trash", "🗑");
 				del.type = "button";
@@ -3235,19 +3252,26 @@ window.EDG_SURVEY = {
 		if (section.headless) {
 			wrap.classList.add("section-headless");
 		} else {
-			const head = el("button", "section-head");
-			head.type = "button";
+			const collapsible = section.collapsible !== false;
+			const head = el(collapsible ? "button" : "div", `section-head${collapsible ? "" : " section-head-static"}`);
+			if (collapsible) head.type = "button";
+			if (section.tooltip) head.title = section.tooltip;
 			head.appendChild(el("span", "section-name", section.name));
 			const sectionChip = originChip(section.origin);
 			if (sectionChip) head.appendChild(sectionChip);
-			const toggle = el("span", "toggle");
-			head.appendChild(toggle);
-			updateHideToggle(toggle, false, section.name);
+			let toggle;
+			if (collapsible) {
+				toggle = el("span", "toggle");
+				head.appendChild(toggle);
+				updateHideToggle(toggle, false, section.name);
+			}
 			wrap.appendChild(head);
-			head.addEventListener("click", () => {
-				const collapsed = body.classList.toggle("collapsed");
-				updateHideToggle(toggle, collapsed, section.name);
-			});
+			if (collapsible) {
+				head.addEventListener("click", () => {
+					const collapsed = body.classList.toggle("collapsed");
+					updateHideToggle(toggle, collapsed, section.name);
+				});
+			}
 		}
 
 		/*
@@ -3369,21 +3393,27 @@ window.EDG_SURVEY = {
 			way an inactive conditional block stays visible greyed rather than disappearing.
 		*/
 		if (part.removed) wrap.classList.add("part-removed");
-		const head = el("button", "part-head");
-		head.type = "button";
+		const collapsible = part.collapsible !== false;
+		const head = el(collapsible ? "button" : "div", `part-head${collapsible ? "" : " part-head-static"}`);
+		if (collapsible) head.type = "button";
 		head.appendChild(el("span", "part-name", part.name));
 		const partChip = originChip(part.origin);
 		if (partChip) head.appendChild(partChip);
-		const toggle = el("span", "toggle");
-		head.appendChild(toggle);
-		updateHideToggle(toggle, false, part.name);
+		let toggle;
+		if (collapsible) {
+			toggle = el("span", "toggle");
+			head.appendChild(toggle);
+			updateHideToggle(toggle, false, part.name);
+		}
 		wrap.appendChild(head);
 
 		const body = el("div", "part-body");
-		head.addEventListener("click", () => {
-			const collapsed = body.classList.toggle("collapsed");
-			updateHideToggle(toggle, collapsed, part.name);
-		});
+		if (collapsible) {
+			head.addEventListener("click", () => {
+				const collapsed = body.classList.toggle("collapsed");
+				updateHideToggle(toggle, collapsed, part.name);
+			});
+		}
 
 		/*
 			The default wording treats the move as a problem, which it is in a survey that asks
