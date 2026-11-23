@@ -2005,10 +2005,10 @@ window.EDG_SURVEY = {
 				{
 					id: "allegedOffences",
 					name: "Alleged Offence",
+					rowHeading: "Alleged Offence",
 					origin: "existing",
 					noAdd: true,
 					stay: true,
-					decision: "Each alleged offence is copied from the incident. The officer does not add one here, and cannot take one off. A second offence can be left blank when no enforcement action is being taken on it, and the checklist can still be saved. If the offence was put on the incident by mistake, remove it there and start a new checklist. An offence that has been closed here must stay closed when the recommendation or the decision is edited.",
 					fields: [
 						{
 							id: "plansRules",
@@ -2102,6 +2102,7 @@ window.EDG_SURVEY = {
 					sections: [
 						{
 							name: "Recommendation",
+							collapsible: false,
 							fields: [
 								{
 									id: "enforcementAction",
@@ -2151,18 +2152,20 @@ window.EDG_SURVEY = {
 						},
 						{
 							name: "Decision",
+							collapsible: false,
 							fields: [
 								{
 									id: "decision",
-									value: "Approved",
 									label: "Recommended Enforcement Approved/Not Approved",
 									type: "select",
 									options: ["Approved", "Not Approved"],
+									value: "Not Approved",
 									mandatory: true,
 									origin: "existing"
 								},
 								{
 									id: "enforcementActionIfNotApproved",
+									value: "Enforcement Action",
 									label: "Enforcement Action",
 									type: "select",
 									options: ["Enforcement Action", "No Action"],
@@ -3194,6 +3197,9 @@ window.EDG_SURVEY = {
 				bar.appendChild(del);
 			}
 			row.appendChild(bar);
+			if (repeater.rowHeading && surface !== "field") {
+				row.appendChild(el("div", "section-head section-head-static", repeater.rowHeading));
+			}
 			(repeater.fields || []).forEach((field) => row.appendChild(buildField(field, rowScope)));
 			(repeater.sections || []).forEach((section) => row.appendChild(buildSection(section, 2, rowScope)));
 			rows.appendChild(row);
