@@ -194,6 +194,23 @@ body.spec-off .part-removed { display: none; }
 .part-head { font-size: 15px; border-bottom: 2px solid var(--divider); }
 .section-head { font-size: 13px; border-bottom: 1px solid var(--divider); }
 .part-head-static, .section-head-static { cursor: default; }
+.section-info { position: relative; display: inline-flex; flex: none; width: 18px; height: 18px; }
+.section-info-button {
+	position: absolute; top: -13px; left: -13px; width: 44px; height: 44px;
+	padding: 0; border: 0; background: transparent; color: var(--deep-blue);
+	font-size: 12px; font-weight: 700; line-height: 1; cursor: pointer;
+}
+.section-info-button::before {
+	content: ""; position: absolute; top: 13px; left: 13px; width: 18px; height: 18px;
+	border: 1px solid currentColor; border-radius: 50%; box-sizing: border-box;
+}
+.section-info-button:focus-visible { outline: 2px solid #7827ff; outline-offset: 2px; }
+.section-info-tip {
+	position: absolute; z-index: 20; top: 100%; right: 0;
+	width: max-content; max-width: min(320px, 80vw); padding: 8px 10px;
+	border-radius: 4px; background: #273b56; color: white;
+	font-size: 12px; font-weight: 400; line-height: 1.4;
+}
 /*
 	The desk affordance reads "hide <section name>", as a live Datascape form does. It needs
 	room for the name, so it no longer shrinks to a two-letter word, and it must not wrap or
@@ -3282,6 +3299,7 @@ window.EDG_SURVEY = {
 		if (button) button.setAttribute("aria-expanded", String(!collapsed));
 	}
 
+	let sectionTooltipId = 0;
 	function buildSection(section, depth, scope) {
 		const wrap = el("section", `section depth-${depth}`);
 		if (section.flush) wrap.classList.add("section-flush");
@@ -3292,8 +3310,29 @@ window.EDG_SURVEY = {
 			const collapsible = section.collapsible !== false;
 			const head = el(collapsible ? "button" : "div", `section-head${collapsible ? "" : " section-head-static"}`);
 			if (collapsible) head.type = "button";
-			if (section.tooltip) head.title = section.tooltip;
 			head.appendChild(el("span", "section-name", section.name));
+			if (section.tooltip && !collapsible) {
+				const info = el("span", "section-info");
+				const button = el("button", "section-info-button", "i");
+				const tip = el("span", "section-info-tip", section.tooltip);
+				tip.id = `section-tooltip-${++sectionTooltipId}`;
+				tip.setAttribute("role", "tooltip");
+				tip.hidden = true;
+				button.type = "button";
+				button.setAttribute("aria-label", `Information about ${section.name}`);
+				button.setAttribute("aria-describedby", tip.id);
+				let pinned = false;
+				info.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") tip.hidden = false; });
+				info.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse" && !pinned && document.activeElement !== button) tip.hidden = true; });
+				button.addEventListener("focus", () => { tip.hidden = false; });
+				button.addEventListener("blur", () => { pinned = false; tip.hidden = true; });
+				button.addEventListener("click", () => { pinned = !pinned; tip.hidden = !pinned; });
+				button.addEventListener("keydown", (event) => { if (event.key === "Escape") { pinned = false; tip.hidden = true; } });
+				info.append(button, tip);
+				head.appendChild(info);
+			} else if (section.tooltip) {
+				head.title = section.tooltip;
+			}
 			const sectionChip = originChip(section.origin);
 			if (sectionChip) head.appendChild(sectionChip);
 			let toggle;
